@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+input {
+  width: 250px;
+  padding: 4px 10px;
+  font-size: 16px;
+}
+input:valid {
+  background-color: palegreen;
+}
+input:invalid {
+  background-color: lightpink;
+}
+</style>
+
+<script type = "text/javascript">
+function validate(event) {
+  var key = event.which || event.keyCode || 0;
+  return ((key >= 48 && key <= 57) || (k == 44) || (k == 32) || (k == 8) || (k == 127));
+}
+
+function check_item_dupls() {
+  const main_inputs = document.getElementById('inputs');
+  if (typeof main_inputs !== 'undefined' && main_inputs !== null) {
+    const elem_inputs = main_inputs.getElementsByTagName('input');
+    if (typeof elem_inputs !== 'undefined' && elem_inputs !== null) {
+      for (var i = 0; i < elem_inputs.length; ++i) {
+        const elem = elem_inputs[i];
+        if (typeof elem !== 'undefined' && elem !== null) {
+          const list_str = elem.value;
+          console.log(list_str);
+
+          const list_numbers = list_str.replaceAll(' ', '').split(',');
+          console.log(list_numbers);
+
+          const is_dupl = list_numbers.some((element, index) => {
+            return list_numbers.indexOf(element) !== index
+          });
+          if (is_dupl) {
+            alert('Duplicate elements exist in list #' + i);
+            console.log('Duplicate elements exist in list #' + i);
+          } else {
+            alert('No duplicate elements in list #' + i);
+            console.log('No duplicate elements in list #' + i);
+          }
+        } else {
+          alert('No needed element');
+          console.error('No needed element');
+        }
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body>
+<div id="inputs">
+  <div>
+    <p>String will be split to list of numbers.</p>
+	<p>Use ',' as separator, extra spaces will be deleted.</p>
+	<p>Valid examples: "123,456"; "123 ,456"; "123, 456"; "123 456"; etc.</p>
+	<hr>
+	<br>
+    List of numbers #1:
+	<input type="text" id="list1" value="" placeholder="List of numbers..." onkeydown="return validate(event)" pattern="[0-9, ]*" required>
+  </div>
+  <div>
+    List of numbers #2:
+	<input type="text" id="list2" value="" placeholder="List of numbers..." onkeydown="return validate(event)" pattern="[0-9, ]*" required>
+  </div>
+  <br>
+  <p>List of any values from string will be generated and checked:</p>
+  <button type="button" onclick="check_item_dupls()">Check</button>
+</div>
+</body>
+
+</html>
