@@ -17,6 +17,6 @@ Check duplicates in input fields (JS HTML DIV)
 
 #### Web example1
 [web-link](https://thealmiller.github.io/check-duplicates-in-input_divjs/example1.html)
-(raw link: https://thealmiller.github.io/check-duplicates-in-input_divjs/example1.html/example1.html)
+(raw link: https://thealmiller.github.io/check-duplicates-in-input_divjs/example1.html)
 
 ---
