@@ -1,5 +1,5 @@
-# check-duplicates-in-input_divjs
-JS DIV Check duplicates in input fields
+# Check duplicates in input
+Check duplicates in input fields (JS HTML DIV)
 
 ---
 
