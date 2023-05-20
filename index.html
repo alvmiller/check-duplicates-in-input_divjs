@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<script type = "text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+input:valid {
+  background-color: palegreen;
+}
+input:invalid {
+  background-color: lightpink;
+}
+</style>
+
+<script type="text/javascript">
 function check_item_dupls() {
+  document.getElementById('results').innerHTML = '';
+
   const main_inputs = document.getElementById('inputs');
   if (typeof main_inputs !== 'undefined' && main_inputs !== null) {
     const elem_inputs = main_inputs.getElementsByTagName('input');
@@ -13,9 +24,30 @@ function check_item_dupls() {
         if (typeof elem !== 'undefined' && elem !== null) {
           const list_str = elem.value;
           console.log(list_str);
+		  if (list_str === '') {
+		    alert('Empty element (no need to check) in list #' + i);
+		    console.log('Empty element, no need to check');
+			document.getElementById("results").innerHTML += ' Empty element (no need to check) in list #' + i;
+			continue;
+		  }
 
           const list_numbers = list_str.replaceAll(' ', '').split(',');
           console.log(list_numbers);
+		  
+		  var is_validated_number = false;
+		  for (var j = 0; j < list_numbers.length; ++j) {
+		    var positive_decimal_regex = /^[0-9]+$/;
+            var is_validated_number = positive_decimal_regex.test(list_numbers[j]);
+			if (!is_validated_number) {
+		      alert('Not positive decimal value in list #' + i);
+		      console.log('Not positive decimal value in list #' + i);
+			  document.getElementById("results").innerHTML += ' Not positive decimal value in list #' + i;
+			  break;
+			}
+		  }
+		  if (!is_validated_number) {
+		    continue;
+		  }
 
           const is_dupl = list_numbers.some((element, index) => {
             return list_numbers.indexOf(element) !== index
@@ -23,16 +55,23 @@ function check_item_dupls() {
           if (is_dupl) {
             alert('Duplicate elements exist in list #' + i);
             console.log('Duplicate elements exist in list #' + i);
+			document.getElementById("results").innerHTML += ' Duplicate elements exist in list #' + i;
           } else {
             alert('No duplicate elements in list #' + i);
             console.log('No duplicate elements in list #' + i);
+			document.getElementById("results").innerHTML += ' No duplicate elements in list #' + i;
           }
         } else {
           alert('No needed element');
           console.error('No needed element');
+		  document.getElementById("results").innerHTML = 'No needed element';
         }
       }
     }
+  } else {
+    alert('No needed element');
+    console.error('No needed element');
+	document.getElementById("results").innerHTML = 'No needed element';
   }
 }
 </script>
@@ -40,14 +79,22 @@ function check_item_dupls() {
 
 <body>
 <div id="inputs">
+  <p>Try to split string to list of numbers</p>
+  <p>Use ',' as separator, extra spaces will be deleted, each gotten token will be checked as number or as empty value at all</p>
+  <hr>
+  <br>
   <div>
-    List of numbers #1 (use ',' as separator): <input type="text" id="list1" value="">
+    <label for="list1">List of numbers #1:</label>
+	<input type="text" name="list1" id="list1" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
   </div>
   <div>
-    List of numbers #2 (use ',' as separator): <input type="text" id="list2" value="">
+    <label for="list2">List of numbers #2:</label>
+	<input type="text" name="list2" id="list2" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
   </div>
+  <br>
   <button type="button" onclick="check_item_dupls()">Check</button>
+  <br>
+  <p id = "results" value=""></p>
 </div>
 </body>
-
 </html>
