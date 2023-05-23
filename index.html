@@ -121,6 +121,9 @@ function wrapper_check() {
 function clear_result() {
   document.getElementById('results').innerHTML = '';
 }
+function clear_result_full() {
+  location.reload();
+}
 </script>
 </head>
 
@@ -163,6 +166,7 @@ function clear_result() {
     <div>
       <br>
       <button type="button" value="" id="clear_button" onclick="clear_result()">Clear Result</button>
+	  <button type="button" value="" id="clear_button_full" onclick="clear_result_full()">Refresh Page</button>
     </div>
 	<br>
 	<hr>
