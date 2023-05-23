@@ -41,14 +41,14 @@ function check_item_dupls() {
   if (typeof main_inputs !== 'undefined' && main_inputs !== null) {
     const elem_inputs = main_inputs.getElementsByTagName('input');
     if (typeof elem_inputs !== 'undefined' && elem_inputs !== null) {
-	  var check_res = true;
+      var check_res = true;
 
-      for (var i = 0; i < elem_inputs.length; ++i) {		
+      for (var i = 0; i < elem_inputs.length; ++i) {        
         const elem = elem_inputs[i];
         if (typeof elem !== 'undefined' && elem !== null) {
           const list_str = elem.value;
           console.log(list_str);
-		  document.getElementById('results').innerHTML += 'List #' + (i + 1) + ':' + elem.value + "<br>";
+          document.getElementById('results').innerHTML += 'List #' + (i + 1) + ':' + elem.value + "<br>";
           if (list_str === '') {
             alert('Empty element (no need to check) in list #' + (i + 1));
             console.log('Empty element, no need to check in list #' + (i + 1));
@@ -68,7 +68,7 @@ function check_item_dupls() {
               console.log('Not positive decimal value in list #' + (i + 1));
               document.getElementById("results").innerHTML += ' Not positive decimal value in list #' + (i + 1) + "<br>";
               check_res = false;
-			  break;
+              break;
             }
           }
           if (!is_validated_number) {
@@ -82,7 +82,7 @@ function check_item_dupls() {
             alert('Duplicate elements exist in list #' + (i + 1));
             console.log('Duplicate elements exist in list #' + (i + 1));
             document.getElementById("results").innerHTML += ' Duplicate elements exist in list #' + (i + 1) + "<br>";
-			check_res = false;
+            check_res = false;
           } else {
             alert('No duplicate elements in list #' + (i + 1));
             console.log('No duplicate elements in list #' + (i + 1));
@@ -92,21 +92,21 @@ function check_item_dupls() {
           alert('No needed element (1)');
           console.error('No needed element (1)');
           document.getElementById("results").innerHTML = 'No needed element (1)';
-		  return false;
+          return false;
         }
       } // for
-	  return check_res;
+      return check_res;
     } else {
-	  alert('No needed element (2)');
+      alert('No needed element (2)');
       console.error('No needed element (2)');
       document.getElementById("results").innerHTML = 'No needed element (2)';
-	  return false;
-	}
+      return false;
+    }
   } else {
     alert('No needed element (3)');
     console.error('No needed element (3)');
     document.getElementById("results").innerHTML = 'No needed element (3)';
-	return false;
+    return false;
   }
 }
 function wrapper_check() {
@@ -115,7 +115,7 @@ function wrapper_check() {
     return true;
   } else {
     alert('Form should not be submitted!');
-	return false;
+    return false;
   }
 }
 function clear_result() {
@@ -143,14 +143,14 @@ function clear_result_full() {
         <li>"abc,123" - (Fail)</li>
       </ul>
       <hr>
-	</div>
+    </div>
 
     <form action="/some_action_page.php" method="get" id="form_inputs" onsubmit="return wrapper_check()">
       <div>
         <label for="list1">List of numbers #1:</label>
         <input type="text" name="list1" id="list1" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
       </div>
-	  <br>
+      <br>
       <div>
         <label for="list2">List of numbers #2:</label>
         <input type="text" name="list2" id="list2" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
@@ -166,15 +166,15 @@ function clear_result_full() {
     <div>
       <br>
       <button type="button" value="" id="clear_button" onclick="clear_result()">Clear Result</button>
-	  <button type="button" value="" id="clear_button_full" onclick="clear_result_full()">Refresh Page</button>
+      <button type="button" value="" id="clear_button_full" onclick="clear_result_full()">Refresh Page</button>
     </div>
-	<br>
-	<hr>
+    <br>
+    <hr>
   </div>
   <div>
-	<p>Results: </p>
+    <p>Results: </p>
     <p id = "results" value=""></p>
-	<hr>
+    <hr>
   </div>
 </div>
 </body>
