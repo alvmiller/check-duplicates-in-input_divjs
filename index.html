@@ -3,27 +3,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
+input {
+  width: 300px;
+  font-size: 18px;
+  padding: 6px 12px;
+}
 input:valid {
   background-color: palegreen;
 }
 input:invalid {
   background-color: lightpink;
 }
+.menu {
+  position: sticky;
+  top: 0;
+  background-color: #F1F1F1;
+}
+.menu_examples {
+  background-color: lightgrey;
+  text-align: center;
+}
+ul {
+  display: inline-block;
+  text-align: left;
+}
+#button_submit {
+  width: 100px;
+  height: 60px;
+}
 </style>
 
 <script type="text/javascript">
 function check_item_dupls() {
-  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').innerHTML += "<br>";
 
   const main_inputs = document.getElementById('inputs');
   if (typeof main_inputs !== 'undefined' && main_inputs !== null) {
     const elem_inputs = main_inputs.getElementsByTagName('input');
     if (typeof elem_inputs !== 'undefined' && elem_inputs !== null) {
-      for (var i = 0; i < elem_inputs.length; ++i) {
+	  var check_res = true;
+
+      for (var i = 0; i < elem_inputs.length; ++i) {		
         const elem = elem_inputs[i];
         if (typeof elem !== 'undefined' && elem !== null) {
           const list_str = elem.value;
           console.log(list_str);
+		  document.getElementById('results').innerHTML += 'List #' + (i + 1) + ':' + elem.value + "<br>";
           if (list_str === '') {
             alert('Empty element (no need to check) in list #' + (i + 1));
             console.log('Empty element, no need to check in list #' + (i + 1));
@@ -37,12 +62,13 @@ function check_item_dupls() {
           var is_validated_number = false;
           for (var j = 0; j < list_numbers.length; ++j) {
             var positive_decimal_regex = /^[0-9]+$/;
-            var is_validated_number = positive_decimal_regex.test(list_numbers[j]);
+            is_validated_number = positive_decimal_regex.test(list_numbers[j]);
             if (!is_validated_number) {
               alert('Not positive decimal value in list #' + (i + 1));
               console.log('Not positive decimal value in list #' + (i + 1));
               document.getElementById("results").innerHTML += ' Not positive decimal value in list #' + (i + 1) + "<br>";
-              break;
+              check_res = false;
+			  break;
             }
           }
           if (!is_validated_number) {
@@ -56,53 +82,96 @@ function check_item_dupls() {
             alert('Duplicate elements exist in list #' + (i + 1));
             console.log('Duplicate elements exist in list #' + (i + 1));
             document.getElementById("results").innerHTML += ' Duplicate elements exist in list #' + (i + 1) + "<br>";
+			check_res = false;
           } else {
             alert('No duplicate elements in list #' + (i + 1));
             console.log('No duplicate elements in list #' + (i + 1));
             document.getElementById("results").innerHTML += ' No duplicate elements in list #' + (i + 1) + "<br>";
           }
         } else {
-          alert('No needed element');
-          console.error('No needed element');
-          document.getElementById("results").innerHTML = 'No needed element';
+          alert('No needed element (1)');
+          console.error('No needed element (1)');
+          document.getElementById("results").innerHTML = 'No needed element (1)';
+		  return false;
         }
-      }
-    }
+      } // for
+	  return check_res;
+    } else {
+	  alert('No needed element (2)');
+      console.error('No needed element (2)');
+      document.getElementById("results").innerHTML = 'No needed element (2)';
+	  return false;
+	}
   } else {
-    alert('No needed element');
-    console.error('No needed element');
-    document.getElementById("results").innerHTML = 'No needed element';
+    alert('No needed element (3)');
+    console.error('No needed element (3)');
+    document.getElementById("results").innerHTML = 'No needed element (3)';
+	return false;
   }
+}
+function wrapper_check() {
+  if (check_item_dupls() === true) {
+    alert('Form will be submitted!');
+    return true;
+  } else {
+    alert('Form should not be submitted!');
+	return false;
+  }
+}
+function clear_result() {
+  document.getElementById('results').innerHTML = '';
 }
 </script>
 </head>
 
 <body>
 <div id="inputs">
-  <p>Try to split string to list of numbers</p>
-  <p>Use ',' as separator, extra spaces will be deleted, each gotten token will be checked as number or as empty value at all</p>
-  <p>Examples:</p>
-  <ul>
-    <li>"" - "" (Ok)</li>
-    <li>"123,456" - "123|456" (Ok)</li>
-    <li>"123 456" - "123456" (Ok)</li>
-    <li>" 123, 456 " - "123|456" (Ok)</li>
-    <li>"abc,123" - (Fail)</li>
-  </ul>
-  <hr>
-  <br>
-  <div>
-    <label for="list1">List of numbers #1:</label>
-<input type="text" name="list1" id="list1" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
+  <div class="menu">
+    <div class="menu_examples">
+      <hr>
+      <p>Try to split string to list of numbers</p>
+      <p>Use ',' as separator, extra spaces will be deleted, each gotten token will be checked as number or as empty value at all</p>
+      <p>Examples:</p>
+      <ul>
+        <li>"" - "" (Ok)</li>
+        <li>"123,456" - "123|456" (Ok)</li>
+        <li>"123 456" - "123456" (Ok)</li>
+        <li>" 123, 456 " - "123|456" (Ok)</li>
+        <li>"abc,123" - (Fail)</li>
+      </ul>
+      <hr>
+	</div>
+
+    <form action="/some_action_page.php" method="get" id="form_inputs" onsubmit="return wrapper_check()">
+      <div>
+        <label for="list1">List of numbers #1:</label>
+        <input type="text" name="list1" id="list1" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
+      </div>
+	  <br>
+      <div>
+        <label for="list2">List of numbers #2:</label>
+        <input type="text" name="list2" id="list2" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
+      </div>
+    </form>
+    <div>
+      <button type="button" onclick="check_item_dupls()" autofocus>Check</button>
+    </div>
+    <br>
+    <div>
+      <button type="submit" form="form_inputs" value="Submit" id="button_submit">Submit</button>
+    </div>
+    <div>
+      <br>
+      <button type="button" value="" id="clear_button" onclick="clear_result()">Clear Result</button>
+    </div>
+	<br>
+	<hr>
   </div>
   <div>
-    <label for="list2">List of numbers #2:</label>
-<input type="text" name="list2" id="list2" placeholder="List of numbers..." value="" pattern="[0-9, ]*">
+	<p>Results: </p>
+    <p id = "results" value=""></p>
+	<hr>
   </div>
-  <br>
-  <button type="button" onclick="check_item_dupls()">Check</button>
-  <br>
-  <p id = "results" value=""></p>
 </div>
 </body>
 </html>
