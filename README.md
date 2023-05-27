@@ -1,5 +1,5 @@
 # Check duplicates in input
-Check duplicates in input fields (JS HTML DIV)
+Check duplicates in input fields (JS HTML DIV) simple example
 
 ---
 
